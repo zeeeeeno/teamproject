@@ -39,6 +39,7 @@ public class MemberController {
     public ResponseEntity<Member> register(@Validated @RequestBody Member member)
             throws Exception {
         log.info("member.getUserName(): " + member.getUserName());
+        log.info("member: " + member);
 
         String inputPassword = member.getUserPw();
         member.setUserPw(passwordEncoder.encode(inputPassword));
@@ -99,12 +100,9 @@ public class MemberController {
         log.info("setupAdmin: service.countAll(): " + service.countAll());
 
         if (service.countAll() == 0) {
-            log.info("setupAdmin if문 안으로 진입");
             String inputPassword = member.getUserPw();
             member.setUserPw(passwordEncoder.encode(inputPassword));
-
-            member.setJob("Admin");
-
+            member.setRole("Admin");
             service.setupAdmin(member);
 
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);

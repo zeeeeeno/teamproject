@@ -10,7 +10,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,13 +38,13 @@ public class Member {
     private String userPw;
 
     @Column(length = 16, nullable = false)
-    private String job;
+    private String sex;
 
     @Column(length = 100, nullable = false)
-    private String userEmail;
+    private String role;
 
     @Column(length = 100, nullable = false)
-    private String userPhone;
+    private String address;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @CreationTimestamp

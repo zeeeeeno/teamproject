@@ -1,12 +1,8 @@
 package com.example.lecture.service;
 
-import com.example.lecture.entity.ClickedNews;
-import com.example.lecture.entity.HomeNews;
 import com.example.lecture.entity.NaverNews;
 import com.example.lecture.entity.News;
 
-import com.example.lecture.repository.ClickedNewsRepository;
-import com.example.lecture.repository.HomeNewsRepository;
 import com.example.lecture.repository.NaverNewsRepository;
 import com.example.lecture.repository.NewsRepository;
 
@@ -28,12 +24,6 @@ import java.util.List;
 public class NewsCrawlService {
     @Autowired
     NewsRepository newsRepository;
-
-    @Autowired
-    HomeNewsRepository homeNewsRepository;
-
-    @Autowired
-    ClickedNewsRepository clickedNewsRepository;
 
     @Autowired
     NaverNewsRepository naverNewsRepository;
@@ -68,33 +58,6 @@ public class NewsCrawlService {
         log.info("naverNewsFindAll()");
 
         return naverNewsRepository.findAll();
-    }
-
-    public List<HomeNews> homeNewsFindAll() {
-        log.info("homeNewsFindAll()");
-
-        return homeNewsRepository.findAll();
-    }
-
-    public void crawlingHome() {
-        log.info("crawlingHome()");
-
-        homeNewsRepository.deleteAll();
-        document = connectUrl("https://news.daum.net/");
-
-        Elements total = document.select("strong.tit_thumb>a.link_txt");
-        Elements image = document.select("div.item_issue>a.link_thumb>img.thumb_g");
-
-        HomeNews homeNews = null;
-
-        for (int i = 0; i < total.size(); i++) {
-            homeNews = new HomeNews();
-            homeNews.setHomeNewsNo(String.valueOf(i + 1));
-            homeNews.setTitle(total.get(i).text());
-            homeNews.setAddress(total.get(i).attr("href"));
-            homeNews.setImage(image.get(i).attr("src"));
-            homeNewsRepository.save(homeNews);
-        }
     }
 
     public void mainCrawler(String category) {
@@ -162,27 +125,5 @@ public class NewsCrawlService {
 
             naverNewsRepository.save(naverNews);
         }
-    }
-
-    public ClickedNews crawlingOne(String newsNo) {
-        log.info("crawlingOne(): " + newsNo);
-
-        News news = newsRepository.findByNewsNo(newsNo);
-
-        ClickedNews clickedNews = new ClickedNews();
-
-        clickedNews.setTitle(news.getTitle());
-        clickedNews.setCategory(news.getCategory());
-        clickedNews.setAddress(news.getAddress());
-        clickedNews.setClickedNewsNo(String.valueOf(clickedNewsRepository.findAll().size() + 1));
-
-        document = connectUrl(clickedNews.getAddress());
-
-        clickedNews.setDate(document.select("span.num_date").text());
-        clickedNews.setContents(document.select("div.article_view>section>:not(figure)").text());
-
-        clickedNewsRepository.save(clickedNews);
-
-        return clickedNews;
     }
 }

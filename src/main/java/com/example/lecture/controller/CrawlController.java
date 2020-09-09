@@ -1,7 +1,5 @@
 package com.example.lecture.controller;
 
-import com.example.lecture.entity.ClickedNews;
-import com.example.lecture.entity.HomeNews;
 import com.example.lecture.entity.NaverNews;
 import com.example.lecture.entity.News;
 import com.example.lecture.service.NewsCrawlService;
@@ -35,20 +33,5 @@ public class CrawlController {
 
         newsCrawler.naverMainCrawler();
         return newsCrawler.naverNewsFindAll();
-    }
-
-    @GetMapping("news")
-    public List<HomeNews> findHome() {
-        log.info("findHome()");
-
-        newsCrawler.crawlingHome();
-        return newsCrawler.homeNewsFindAll();
-    }
-
-    @GetMapping("news/{newsNo}")
-    public ClickedNews crawlingOne(@PathVariable String newsNo) {
-        log.info("crawlingOne(): " + newsNo);
-
-        return newsCrawler.crawlingOne(newsNo);
     }
 }

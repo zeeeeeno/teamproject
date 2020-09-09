@@ -21,11 +21,16 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void register(Member member) throws Exception {
+        log.info("member: " + member);
+
         Member memEntity = new Member();
+
         memEntity.setUserId(member.getUserId());
         memEntity.setUserPw(member.getUserPw());
         memEntity.setUserName(member.getUserName());
-        memEntity.setJob(member.getJob());
+        memEntity.setSex(member.getSex());
+        memEntity.setRole(member.getRole());
+        memEntity.setAddress(member.getAddress());
 
         MemberAuth memberAuth = new MemberAuth();
         memberAuth.setAuth("ROLE_MEMBER");
@@ -43,9 +48,9 @@ public class MemberServiceImpl implements MemberService {
         memEntity.setUserId(member.getUserId());
         memEntity.setUserPw(member.getUserPw());
         memEntity.setUserName(member.getUserName());
-        memEntity.setUserPhone(member.getUserPhone());
-        memEntity.setUserEmail(member.getUserEmail());
-        memEntity.setJob(member.getJob());
+        memEntity.setSex(member.getSex());
+        memEntity.setRole(member.getRole());
+        memEntity.setAddress(member.getAddress());
 
         MemberAuth memberAuth = new MemberAuth();
         memberAuth.setAuth("ROLE_ADMIN");
@@ -66,18 +71,12 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void modify(Member member) throws Exception {
         log.info("MemberServiceImpl - modify: " + member.getUserNo());
-//        Member memEntity = repository.getOne(member.getUserNo());
         List<Member> memEntity = repository.findByUserNo(member.getUserNo());
         log.info("memEntity - " + memEntity);
-        log.info("memEntity - " + memEntity.get(0).getUserPhone());
+        log.info("memEntity - " + memEntity.get(0).getSex());
         Member mem = memEntity.get(0);
-//        memEntity.setUserName(member.getUserName());
         mem.setUserName(member.getUserName());
-//        memEntity.setUserEmail(member.getUserEmail());
-        mem.setUserEmail(member.getUserEmail());
-//        memEntity.setUserPhone(member.getUserPhone());
-        mem.setUserPhone(member.getUserPhone());
-//        memEntity.setJob(member.getJob());
+        mem.setAddress(member.getAddress());
 
         List<MemberAuth> memberAuthList = mem.getAuthList();
         List<MemberAuth> authList = member.getAuthList();
@@ -111,8 +110,10 @@ public class MemberServiceImpl implements MemberService {
             mem.setUserId((String) valArr[1]);
             mem.setUserPw((String) valArr[2]);
             mem.setUserName((String) valArr[3]);
-            mem.setJob((String) valArr[4]);
-            mem.setRegDate((Date) valArr[5]);
+            mem.setSex((String) valArr[4]);
+            mem.setRole((String) valArr[5]);
+            mem.setAddress((String) valArr[6]);
+            mem.setRegDate((Date) valArr[7]);
 
             memberList.add(mem);
         }
