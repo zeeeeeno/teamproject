@@ -10,6 +10,7 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
     public List<Member> findByUserId(String userId);
+
     public List<Member> findByUserNo(Long userNo);
 
     @Query("select m.userNo, m.userPw, m.userName, m.regDate from Member m")

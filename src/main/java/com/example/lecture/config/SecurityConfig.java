@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         return new CustomUserDetailsService();
     }
 
-    // 어떠한 형식의 URL 요청이나 Header요청이든 수용하도록 만든다.
+    // 어떠한 형식의 URL 요청이나 Header 요청이든 수용하도록 만든다.
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

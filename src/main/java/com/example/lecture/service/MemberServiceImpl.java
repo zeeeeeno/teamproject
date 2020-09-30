@@ -125,4 +125,20 @@ public class MemberServiceImpl implements MemberService {
     public long countAll() throws Exception {
         return repository.count();
     }
+
+    @Override
+    public boolean checkId(String userId) throws Exception {
+        log.info("checkId() - userId: " + userId);
+        List<Member> memEntity = repository.findByUserId(userId);
+        log.info("memEntity: " + memEntity);
+
+        if (!memEntity.isEmpty()) {
+            log.info("userId가 존재한다.");
+            return true;
+        }
+
+        return false;
+    }
+
+
 }

@@ -1,7 +1,6 @@
 package com.example.lecture.service;
 
 import com.example.lecture.entity.VueBoard;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

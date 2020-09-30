@@ -50,14 +50,6 @@ public class VueBoardController {
 
         log.info("register board.getBoardNo() = " + board.getBoardNo());
 
-        /*
-        URI resourceURI = uriBuilder.path("boards/{boardNo}")
-                .buildAndExpand(board.getBoardNo())
-                .encode()
-                .toUri();
-        return ResponseEntity.created(resourceURI).build();
-         */
-
         return new ResponseEntity<>(board, HttpStatus.OK);
     }
 

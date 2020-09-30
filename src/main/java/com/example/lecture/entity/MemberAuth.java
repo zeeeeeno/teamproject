@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 @ToString
 @Entity
-@Table(name = "member_auth")
+@Table(name = "probono_member_auth")
 public class MemberAuth {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

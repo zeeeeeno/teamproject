@@ -20,7 +20,7 @@ import java.util.List;
 @EqualsAndHashCode(of = "userNo")
 @ToString
 @Entity
-@Table(name = "member")
+@Table(name = "probono_member")
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +42,9 @@ public class Member {
 
     @Column(length = 100, nullable = false)
     private String role;
+
+    @Column(length = 20, nullable = false)
+    private String postcode;
 
     @Column(length = 100, nullable = false)
     private String address;

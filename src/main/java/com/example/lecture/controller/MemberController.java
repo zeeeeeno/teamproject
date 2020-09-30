@@ -6,6 +6,7 @@ import com.example.lecture.security.AuthUtil;
 import com.example.lecture.service.MemberAuthService;
 import com.example.lecture.service.MemberService;
 import lombok.extern.java.Log;
+import org.h2.util.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -124,5 +125,26 @@ public class MemberController {
         log.info("auth: " + auth);
 
         return new ResponseEntity<>(auth, HttpStatus.OK);
+    }
+
+    @PostMapping("checkId")
+    public ResponseEntity<String> checkId(@Validated @RequestBody String userId) throws Exception {
+        log.info("checkId() - userId: " + userId);
+        String[] userIdArr = userId.split(":");
+        log.info("userIdArr[1] : " + userIdArr[1]);
+        String userIdString1 = userIdArr[1].replace("\"", "");
+        log.info("userIdString1 : " + userIdString1);
+        String userIdString2 = userIdString1.replace("}", "");
+        log.info("userIdString2 : " + userIdString2);
+
+
+        if (service.checkId(userIdString2) == false) {
+            return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+        }
+
+        String message = messageSource.getMessage("common.cannotCheckUserId",
+                null, Locale.KOREAN);
+
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 }
